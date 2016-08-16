@@ -5,18 +5,27 @@ dados <- lapply(arquivos, read.table, header = FALSE)
 dados <- data.frame(dados)
 names(dados) <- c("Casos", "X_c", "Y_c", "Pop")
 
+pop_total <- sum(dados$Pop)
+casos_total <- sum(dados$Casos)
+
 # Matriz de distâncias
 
 mat_dist <- dist(dados[, 2:3])
 mat_dist <- as.matrix(mat_dist)
 
-# Vetor ordenado com índices de distâncias para a primeira observação
-# mat_dist_ind <-
-#   sort(abs(mat_dist[-1, 1] - mat_dist[1, 1]), index.return = TRUE)$ix + 1
+diag(mat_dist) = NA
+mat_dist_ind <- matrix(ncol = nrow(dados), nrow = nrow(dados) - 1)
 
-mat_dist_ind <- matrix(nrow = nrow(dados), ncol=nrow(dados))
-# Laço para calcular matriz de distâncias ordenada com os índices
-for(i in 1:length(mat_dist_ind)){
-   sort(abs(mat_dist[-i,i]), index.return = TRUE)$ix + 1
+# Gerando a matriz de distancias ordenada por indices 
+for(i in 1:nrow(dados)){
+  mat_dist_ind[,i] <- head(order(mat_dist[,i]), -1)
 }
+
+
+# Scan Circular
+for(i in 1:nrow(dados)){
+  n_z <- dados[i, 4]
+  c_z <- dados[i, 1]
+
+  }
 

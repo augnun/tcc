@@ -34,9 +34,9 @@ for (i in 1:nrow(dados)) {
          llr_z <-
            c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
                                                                (casos_total - mu_z)),
-         llr_z <- 0)
-  df.llr_z <- rbind(df.llr_z,(append(zona, llr_z)))
-}
+          llr_z <- 0)
+   df.llr_z <- rbind(df.llr_z,(append(zona, llr_z)))
+ }
 
 
 colnames(df.llr_z) <- c("zonas", "llr")
@@ -47,6 +47,8 @@ for(i in 1:nrow(df.llr_z)){
 
     zona <- append(zona, j)
     n_z <- sum(dados[c(noquote(as.vector(zona))), 4])
+    if(n_z > pop_total/2){next()}
+    else{
     c_z <- sum(dados[c(noquote(as.vector(zona))), 1])
     mu_z <- casos_total*(n_z/pop_total)
     ifelse(c_z > mu_z,
@@ -55,7 +57,7 @@ for(i in 1:nrow(df.llr_z)){
                                                                  (casos_total - mu_z)),
            llr_z <- 0)
     df.llr_z <- rbind(df.llr_z,(append(zona, llr_z)))
-    tamanho <- tamanho + 1
+  }
   }
 }
 

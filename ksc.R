@@ -18,7 +18,7 @@ mat_dist_ind <- matrix(ncol = nrow(dados), nrow = nrow(dados) - 1)
 
 # Gerando a matriz de distancias ordenada por indices
 for (i in 1:nrow(dados)) {
-  mat_dist_ind[, i] <- head(order(mat_dist[, i]),-1)
+  mat_dist_ind[, i] <- head(order(mat_dist[, i]), -1)
 }
 
 
@@ -34,34 +34,34 @@ for (i in 1:nrow(dados)) {
          llr_z <-
            c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
                                                                (casos_total - mu_z)),
-          llr_z <- 0)
-   df.llr_z <- rbind(df.llr_z,(append(zona, llr_z)))
- }
+         llr_z <- 0)
+  df.llr_z <- rbind(df.llr_z, (append(zona, llr_z)))
+}
 
 
 colnames(df.llr_z) <- c("zonas", "llr")
 tamanho <- 1
-for(i in 1:nrow(df.llr_z)){
-  zona <- i
-  for(j in mat_dist_ind[,i]){
 
-    zona <- append(zona, j)
-    n_z <- sum(dados[c(noquote(as.vector(zona))), 4])
-    if(n_z > pop_total/2){next()}
-    else{
-    c_z <- sum(dados[c(noquote(as.vector(zona))), 1])
-    mu_z <- casos_total*(n_z/pop_total)
-    ifelse(c_z > mu_z,
-           llr_z <-
-             c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
-                                                                 (casos_total - mu_z)),
-           llr_z <- 0)
-    df.llr_z <- rbind(df.llr_z,(append(zona, llr_z)))
-  }
+
+for (i in 1:nrow(df.llr_z)) {
+  zona <- character()
+  zona <- i
+  for (j in mat_dist_ind[, i]) {
+    zona <- paste(zona, j)
+    n_z <- sum(dados[c(as.vector(zona)), 4])
+    if (n_z > pop_total / 2) {
+      next()
+    }
+    else
+    {
+      c_z <- sum(dados[c(as.vector(zona)), 1])
+      mu_z <- casos_total  *  (n_z  /  pop_total)
+      ifelse(c_z > mu_z,
+             llr_z <-
+               c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
+                                                                   (casos_total - mu_z)),
+             llr_z <- 0)
+      df.llr_z <- rbind(df.llr_z, (append(zona, llr_z)))
+    }
   }
 }
-
-
-  
-  
-

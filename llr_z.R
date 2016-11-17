@@ -22,8 +22,8 @@ llr_z <- function(dados, tipo = "maximo" ){
     mat_dist_ind[, i] <- head(order(mat_dist[, i]), -1)
   }
   
-  
-  resultado <- data.frame()
+  k = 1
+  resultado <- data.frame(zona = rep(c(0), nrow(dados)^2), llr_z= rep(NA, nrow(dados)^2))
 if(tipo == "todos"){
   for(i in 1:ncol(mat_dist_ind)){
     zona <- i
@@ -64,14 +64,13 @@ if(tipo == "todos"){
                  c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
                                                                      (casos_total - mu_z)),
                llr_z <- 0)
-        resultado <- rbind(resultado, cbind(list(zona), llr_z))
+        resultado[k,1] <- c(zona)
+        resultado[k,2] <- llr_z
+        k = k+1
         
       }
     }
     return(resultado[which.max(resultado$llr_z),])
-  }
+    }
 }
 
-library(profvis)
-
-profvis()

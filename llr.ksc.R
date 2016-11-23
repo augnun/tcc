@@ -1,12 +1,21 @@
+# Inicialização dados
+
+arquivos <- list.files("dados_hex", full.names = TRUE)
+dados <- lapply(arquivos, read.table, header = FALSE)
+dados <- data.frame(dados)
+names(dados) <- c("Casos", "X_c", "Y_c", "Pop")
+
 #' Title llr.ksc
 #'
-#' @param dados 
+#' @param dados: data-frame com quatro colunas: casos,
+#' X_c, Y_c e população
 #'
-#' @return Data Frame com relação de zonas e respectivos logs. da razão de verossimilhança
+#' @return Data Frame com relação de zonas e respectivos
+#'  logs. da razão de verossimilhança
 #' @export
 #'
 #' @examples
-llr.ksc <- function(dados){
+llr.ksc <- function(dados) {
   pop_total <- sum(dados$Pop)
   casos_total <- sum(dados$Casos)
   
@@ -20,19 +29,19 @@ llr.ksc <- function(dados){
   
   # Gerando a matriz de distancias ordenada por indices
   for (i in 1:nrow(dados)) {
-    mat_dist_ind[, i] <- head(order(mat_dist[, i]), -1)
+    mat_dist_ind[, i] <- head(order(mat_dist[, i]),-1)
   }
   
   
   resultado <- data.frame()
   
-  for(i in 1:ncol(mat_dist_ind)){
+  for (i in 1:ncol(mat_dist_ind)) {
     zona <- i
-    for(j in mat_dist_ind[,i]){
-      zona <- append(zona,j)
+    for (j in mat_dist_ind[, i]) {
+      zona <- append(zona, j)
       n_z <- sum(dados[zona, 4])
-      if(n_z > pop_total/2){
-        zona <- zona[1:length(zona)-1]
+      if (n_z > pop_total / 2) {
+        zona <- zona[1:length(zona) - 1]
         next()
       }
       c_z <- sum(dados[zona, 1])

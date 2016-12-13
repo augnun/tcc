@@ -42,8 +42,21 @@ llr.ksc <- function(dados) {
   
   for (i in 1:ncol(mat_dist_ind)) {
     zona <- i
+    n_z <- sum(dados[zona, 5])
+    if (n_z > pop_total / 2) {
+      zona <- zona[1:length(zona) - 1]
+      next()
+    }
+    c_z <- sum(dados[zona, 2])
+    mu_z <- casos_total * (n_z / pop_total)
+    ifelse(c_z > mu_z,
+           llr_z[k] <-
+             c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
+                                                                 (casos_total - mu_z)),
+           llr_z[k] <- 0)
+    zonas[k] <-  list(zona)
+    k <- k + 1
     for (j in mat_dist_ind[, i]) {
-      k = 1
       zona <- append(zona, j)
       n_z <- sum(dados[zona, 5])
       if (n_z > pop_total / 2) {

@@ -38,10 +38,12 @@ llr.ksc <- function(dados) {
   llr_z <- vector(length = nrow(dados)^2)
   zonas <- list(length = nrow(dados^2))
   k = 1
+
   
   for (i in 1:ncol(mat_dist_ind)) {
     zona <- i
     for (j in mat_dist_ind[, i]) {
+      k = 1
       zona <- append(zona, j)
       n_z <- sum(dados[zona, 5])
       if (n_z > pop_total / 2) {
@@ -63,6 +65,7 @@ llr.ksc <- function(dados) {
   resultado <- list()
   resultado <- list(c(zonas[which.max(llr_z)]),max(llr_z))
   return(resultado)
+
 }
 
 llr.ksc(dados)

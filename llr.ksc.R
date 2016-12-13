@@ -1,10 +1,11 @@
 # Inicialização dados
+# arquivos <- list.files("dados_hex", full.names = TRUE)
+# dados <- lapply(arquivos, read.table, header = FALSE)
+# dados <- data.frame(dados)
+# names(dados) <- c("Casos", "X_c", "Y_c", "Pop")
 
-arquivos <- list.files("dados_hex", full.names = TRUE)
-dados <- lapply(arquivos, read.table, header = FALSE)
-dados <- data.frame(dados)
-names(dados) <- c("Casos", "X_c", "Y_c", "Pop")
 
+dados <- read.csv("dados_hex/dados.csv", header = T)
 #' Title llr.ksc
 #'
 #' @param dados: data-frame com quatro colunas: casos,
@@ -34,10 +35,13 @@ llr.ksc <- function(dados) {
   
   
   resultado <- data.frame()
+  llr_z <- vector(length = length(dados)^2)
+  zonas <- vector(length = length(dados^2))
   
   for (i in 1:ncol(mat_dist_ind)) {
     zona <- i
     for (j in mat_dist_ind[, i]) {
+      k = 1
       zona <- append(zona, j)
       n_z <- sum(dados[zona, 4])
       if (n_z > pop_total / 2) {
@@ -47,13 +51,15 @@ llr.ksc <- function(dados) {
       c_z <- sum(dados[zona, 1])
       mu_z <- casos_total * (n_z / pop_total)
       ifelse(c_z > mu_z,
-             llr_z <-
+             llr_z[k] <-
                c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
                                                                    (casos_total - mu_z)),
-             llr_z <- 0)
-      resultado <- rbind(resultado, cbind(list(zona), llr_z))
-      
+             llr_z[k] <- 0)
+      zonas[k] <-  zona
+      k <- k + 1
     }
   }
-  return(resultado)
+  return(max(llr_z))
 }
+
+llr.ksc(dados)

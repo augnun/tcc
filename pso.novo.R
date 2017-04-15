@@ -13,91 +13,179 @@ llr_z <- vector(length = nrow(dados) ^ 2)
 llr_z.cand <- vector(length = nrow(dados) ^ 2)
 zonas <- list(length = nrow(dados) ^ 2)
 zonas.cand <- list(length = nrow(dados) ^ 2)
-sol.iniciais <- vector(length = nrow(dados)^2)
+sol.iniciais <- vector(length = nrow(dados) ^ 2)
 
-llr.pso.novo <- function(dados){
-  pop_total <- sum(dados$Pop)
-  casos_total <- sum(dados$Casos)
-  
-  # Obtendo candidatos com apenas uma região
-  a <- 1
-  for (i in 1:nrow(dados)){
-    zona <- i
-    n_z <- dados[zona, 5]
-    if(n_z > pop_total/2 | length(zona) > nrow(dados)/2){
-      a <- a + 1
-      next()
-    }
-    c_z <- dados[zona, 2]
-    mu_z <- casos_total * (n_z / pop_total)
-    ifelse(c_z > mu_z,
-           llr_z[a] <-
-             c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
-                                                                 (casos_total - mu_z)),
-           llr_z[a] <- 0)
-    zonas[i] <-  list(zona)
-    llr_z.cand[i] <- llr_z[a] 
-    zonas.cand[i] <- zona
-    a <- a + 1
-    # Compondo regiões
-    for (j in vizinhos[[i]]){
-      zona <- append(i,j)
-      n_z <- sum(dados[zona, 5])
-      if (n_z > pop_total/2 | length(zona) > nrow(dados)/2) {
-        a <- a + 1
-        next()
-      }
-      c_z <- sum(dados[zona, 2])
-      mu_z <- casos_total * (n_z / pop_total)
-      ifelse(
-        c_z > mu_z,
-        llr_z[a] <-
-          c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
-                                                              (casos_total - mu_z)),
-        llr_z[a] <- 0
-      )
-      if(llr_z[a] >= llr_z.cand[i]){
-        llr_z.cand[i] <- llr_z[a]
+llr.pso.novo <-
+  function(dados,
+           metodo = 1,
+           resultado = c("maximo")) {
+    pop_total <- sum(dados$Pop)
+    casos_total <- sum(dados$Casos)
+    
+    if (metodo == 1) {
+      for (i in 1:nrow(dados)) {
+        stop = 0
+        zona <- i
+        n_z <- sum(dados[zona, 5])
+        if (n_z > pop_total / 2 | length(zona) > nrow(dados) / 2) {
+          next()
+        }
+        c_z <- sum(dados[zona, 2])
+        mu_z <- casos_total * (n_z / pop_total)
+        ifelse(c_z > mu_z,
+               llr_z <-
+                 c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
+                                                                     (casos_total - mu_z)),
+               llr_z <- 0)
+        llr_z.cand[i] <- llr_z
         zonas.cand[i] <- list(zona)
         
+        
+        
+        
+        while (stop == 0) {
+          for (j in 1:length(vizinhos[[i]])) {
+            zona <- unique(append(zona, unlist(vizinhos[zona])[j]))
+            n_z <- sum(dados[zona, 5])
+            if (n_z > pop_total / 2 |
+                length(zona) > nrow(dados) / 2) {
+              next()
+            }
+            c_z <- sum(dados[zona, 2])
+            mu_z <- casos_total * (n_z / pop_total)
+            ifelse(
+              c_z > mu_z,
+              llr_z <-
+                c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
+                                                                    (casos_total - mu_z)),
+              llr_z <- 0
+            )
+            if (llr_z > llr_z.cand[i]) {
+              llr_z.cand[i] <- llr_z
+              zonas.cand[i] <- list(zona)
+            }
+            else{
+              length(zona) <- length(zona) - 1
+              if (length(zona) > 1 & j < length(zona)) {
+                next()
+              }
+              if (length(zona) == 1 &
+                  j == length(unlist(vizinhos[zona]))) {
+                stop = 1
+                break()
+              }
+              next()
+            }
+            
+          }
+        }
+        
       }
-      zonas[a] <- list(zona)
-      a <- a + 1
-      # for (n in unique(unlist(vizinhos[unlist(zonas.cand[which.max(llr_z.cand)])]))[! unique(unlist(vizinhos[unlist(zonas.cand[which.max(llr_z.cand)])])) %in% zona]
-      # ){
-      #   zona <- unique(zonas.cand[i], n)
-      #   n_z <- sum(dados[zona, 5])
-      #   if (n_z > pop_total/2 | length(zona) > nrow(dados)/2) {
-      #     a <- a + 1
-      #     next()
-      #   }
-      #   c_z <- sum(dados[zona, 2])
-      #   mu_z <- casos_total * (n_z / pop_total)
-      #   ifelse(
-      #     c_z > mu_z,
-      #     llr_z[a] <-
-      #       c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
-      #                                                           (casos_total - mu_z)),
-      #     llr_z[a] <- 0
-      #   )
-      #   if(llr_z[a] >= llr_z.cand[i]){
-      #     llr_z.cand[i] <- llr_z[a]
-      #     zonas.cand[i] <- list(zona)
-      #     
-      #   }
-      #   zonas[a] <- list(zona)
-      #   a <- a + 1
-      # }
+      if (resultado == maximo) {
+        resultado <-
+          data.frame(cbind(zonas.cand[which.max(llr_z.cand)], llr_z.cand[which.max(llr_z.cand)]))
+        colnames(resultado) <- c("Zona", "LLR")
+        return(resultado)
+      }
+      if (resultado == todos) {
+        resultado <-
+          data.frame(cbind(zonas.cand[which(llr_z.cand != 0)], llr_z.cand[which(llr_z.cand != 0)]),
+                     row.names = NULL)
+        colnames(resultado) <- c("Zona", "LLR")
+        return(resultado)
+      }
     }
-      return(data.frame(cbind(zonas.cand[which(llr_z.cand != 0)]),
-                        llr_z.cand[which(llr_z.cand != 0)],row.names = NULL, check.names = F))
-      
+    
+    
+    if (metodo == 2) {
+      for (i in 1:nrow(dados)) {
+        # Obtendo candidatos com apenas uma região
+        zona <- i
+        n_z <- sum(dados[zona, 5])
+        if (n_z > pop_total / 2 | length(zona) > nrow(dados) / 2) {
+          next()
+        }
+        c_z <- sum(dados[zona, 2])
+        mu_z <- casos_total * (n_z / pop_total)
+        ifelse(c_z > mu_z,
+               llr_z <-
+                 c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
+                                                                     (casos_total - mu_z)),
+               llr_z <- 0)
+        llr_z.cand[i] <- llr_z
+        zonas.cand[i] <- list(zona)
+        # Compondo regiões
+        stop = 0
+        zona <- append(i, vizinhos[[i]])
+        while (stop == 0) {
+          n_z <- sum(dados[zona, 5])
+          if (n_z > pop_total / 2 | length(zona) > nrow(dados) / 2) {
+            a <- a + 1
+            next()
+          }
+          c_z <- sum(dados[zona, 2])
+          mu_z <- casos_total * (n_z / pop_total)
+          ifelse(c_z > mu_z,
+                 llr_z <-
+                   c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
+                                                                       (casos_total - mu_z)),
+                 llr_z <- 0)
+          if (llr_z > llr_z.cand[i]) {
+            llr_z.cand[i] <- llr_z
+            zonas.cand[i] <- list(zona)
+            zona <- unique(append(i, unique(unlist(
+              vizinhos[c(zona)]
+            ))))
+            n_z <- sum(dados[zona, 5])
+            if (n_z > pop_total / 2 |
+                length(zona) > nrow(dados) / 2) {
+              a <- a + 1
+              next()
+            }
+            c_z <- sum(dados[zona, 2])
+            mu_z <- casos_total * (n_z / pop_total)
+            ifelse(
+              c_z > mu_z,
+              llr_z <-
+                c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
+                                                                    (casos_total - mu_z)),
+              llr_z <- 0
+            )
+            if (llr_z > llr_z.cand[i]) {
+              llr_z.cand[i] <- llr_z
+              zonas.cand[i] <- list(zona)
+            }
+            if (length(zona) > nrow(dados) / 2) {
+              next()
+            }
+            if (length(zona) - 1 > 1) {
+              length(zona) = length(zona) - 1
+            }
+            else{
+              stop = 1
+            }
+            
+            next()
+          }
+          if (length(zona) > nrow(dados) / 2) {
+            next()
+          }
+          if (length(zona) - 1 > 1) {
+            length(zona) = length(zona) - 1
+          }
+          else{
+            stop = 1
+          }
+        }
+      }
+      return(data.frame(cbind(c(zonas.cand), llr_z.cand)))
     }
+    
   }
 
-  
 
 
 
-teste <- llr.pso.novo(dados)
-colnames(teste) <- c("Zonas Candidatas", "LLR")
+#
+# teste <- llr.pso.novo(dados)
+# colnames(teste) <- c("Zonas Candidatas", "LLR")

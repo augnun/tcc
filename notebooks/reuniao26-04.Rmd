@@ -1,0 +1,53 @@
+---
+title: "Reunião 26-04"
+output: html_notebook
+---
+
+# Início
+
+Começamos recapitulando o que é o _Particle Swarm Optimization_. Inicialmente proposto no contexto de otimização de funções reais, o professor deu o exemplo de minimizar uma função real bivariada a partir de soluções iniciais pensando em curvas de nível:
+
+* Cada uma destas partículas (ou soluções iniciais) está em um nível da função. O exemplo dado foi o de um paraboloide, mas não necessariamente precisa ser. 
+
+* O vetor velocidade das partículas tem três componentes:    
+  *  uma na direção do ótimo global, que pode ser uma destas partículas que tem o mínimo/máximo da função objetivo;
+  * uma na direção do "ótimo pessoal" da partícula, o máximo/mínimo que a partícula já atingiu
+  * uma na direção em que a partícula já estava se movimentando
+
+# No contexto da Análise de _Clusters_
+
+Aqui, a função a ser maximizada é a log razão de verossimilhança (LLR). Em termos de estruturas de dados, vamos considerar zonas binárias, ou seja, Z é tal que $Z[i]$ é igual a 1 se a região i está na zona Z e Z[i] é igual a zero caso contrário. Isso é diferente do que eu vinha fazendo, como eu queria "imprimir" as regiões, trabalhei com listas nos _data frames_ do R.
+
+## O que ele queria inicialmente
+Não faria sentido considerar partículas (zonas) não contíguas ou sem interseção: como fazer com que diferentes partículas "se movessem" sendo que temos uma função de dimensão 203 e não sabemos nada sobre sua continuidade.
+
+Ele queria que, a partir de soluções iniciais (partículas ou zonas), avaliássemos como tornar essas "partículas" mais similares entre si. Isso é problemático e demanda muito esforço, precisaríamos qualificar os tipos de interseção, se a zona tem "pontas" e quais regiões estão nelas, bem como definir uma heurística de remoção/inserção de regiões.
+
+## O que vamos fazer agora
+* Vamos considerar diferentes zonas candidatas a partir das que encontrei até agora. Cada zona deve ser indicada pelo tal vetor binário, e vamos considerar um fator de penalização que diminui a função objetivo para zonas candidatas a _cluster_ que sejam desconexas ou "muito grandes".
+
+### Penalizações
+
+Ele falou de três
+
+1. Uma considera o perímetro da zona/partícula e constrói um círculo de mesmo perímetro. Quanto mais próxima a área do polígono formado pelas regiões da zona for da área do círculo de mesmo perímetro, menor a penalização.
+
+2. Uma foi apresentada como dissertação de mestrado em uma banca que ele participou. Calculamos $\Delta_x$ e $\Delta_y$ como a diferença entre as coordenadas das regiões. A penalização é a média harmônica destes $\Delta$.
+
+# Em termos de passos a serem seguidos
+
+1. "Rodar" $H_0$ n vezes (n = 1000?), obtendo n valor de $T = max_z LLR(z)$
+
+2. Calcular o quantil 95%
+
+3. "Rodar" $H_a$ e verificar se T é maior que o quantil 95% de $H_a$. Se for, incrementa o poder uma unidade e calcula a sensibilidade e o PPV.
+
+4. Repete passo anterior n vezes (n = 1000?)
+
+5. Calcular poder, sensibilidade e PPV médios
+
+$$\text{Sensibilidade} = \frac{\text{Pop}(\text{cluster verdadeiro} \cap \text{cluster detectado})}{\text{Pop}(\text{cluster verdadeiro})}$$
+
+$$\text{PPV} = \frac{\text{Pop}(\text{cluster verdadeiro} \cap \text{cluster detectado})}{\text{Pop}(\text{cluster detectado})}$$
+
+

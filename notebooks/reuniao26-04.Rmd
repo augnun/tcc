@@ -50,4 +50,18 @@ $$\text{Sensibilidade} = \frac{\text{Pop}(\text{cluster verdadeiro} \cap \text{c
 
 $$\text{PPV} = \frac{\text{Pop}(\text{cluster verdadeiro} \cap \text{cluster detectado})}{\text{Pop}(\text{cluster detectado})}$$
 
+# Comentários sobre o que são o Poder, a Sensibilidade e o PPV no contexto
 
+* Poder em termos gerais é a probabilidade de rejeitar uma hipótese nula falsa. Ou seja, é a probabilidade de que o _cluster_ encontrado é realmente significativo;
+* Sensibilidade é probabilidade de encontrar _falsos positivos_, ou seja, detectar um _cluster_ que inclui o _cluster_ "verdadeiro" e não "muita coisa além dele";
+* PPV é a 
+
+# Pragmaticamente, a escrita do relatório
+
+O foco tem que ser no PSO, então ele sugeriu o seguinte:
+
+1. Falar sobre o PSO _real_;
+2. Falar sobre o PSO binário, que estamos usando;
+3. Falar sobre o _Scan_ Circular;
+4. Falar sobre técnicas de penalização;
+5. Executar as simulações.

@@ -1,0 +1,223 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdftex 2017.5.8)  23 MAY 2017 11:04
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**"/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex"
+(/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:27: Undefined control sequence.
+l.27 \chapter
+             {Resultados de comandos}\label{cap_exemplos}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:27: Undefined control sequence.
+l.27 \chapter{Resultados de comandos}\label
+                                           {cap_exemplos}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:27: Missing $ inserted.
+<inserted text> 
+                $
+<to be read again> 
+                   _
+l.27 \chapter{Resultados de comandos}\label{cap_
+                                                exemplos}
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:27: Extra }, or forgotten $.
+l.27 ...esultados de comandos}\label{cap_exemplos}
+                                                  
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:28: Missing $ inserted.
+<inserted text> 
+                $
+<to be read again> 
+                   \par 
+l.28 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:29: Undefined control sequence.
+l.29 \chapterprecis
+                   {Isto √© uma sinopse de cap√≠tulo. A ABNT n√£o traz nenhuma
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no √ in font cmr10!
+Missing character: There is no © in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ≠ in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no £ in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ß in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no £ in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no © in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no © in font cmr10!
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:31: Undefined control sequence.
+l.31 e livros t√©cnicos.}\index
+                               {sinopse de cap√≠tulo}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ≠ in font cmr10!
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:34: Undefined control sequence.
+l.34 \section
+             {Codifica√ß√£o dos arquivos: UTF8}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ß in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no £ in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ß in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no £ in font cmr10!
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:37: Undefined control sequence.
+l.37 ...ifica√ß√£o de todos os arquivos do \abnTeX
+                                                  \ √© \texttt{UTF8}. √â nec...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no √ in font cmr10!
+Missing character: There is no © in font cmr10!
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:37: Undefined control sequence.
+l.37 ...e todos os arquivos do \abnTeX\ √© \texttt
+                                                  {UTF8}. √â necess√°rio que
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no √ in font cmr10!
+Missing character: There is no â in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ° in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ™ in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ß in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no £ in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ° in font cmr10!
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:42: Undefined control sequence.
+l.42 \section
+             {Cita√ß√µes diretas}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ß in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no µ in font cmr10!
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:43: Undefined control sequence.
+l.43 \label
+           {sec-citacao}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:46: Undefined control sequence.
+l.46 \index
+           {cita√ß√µes!diretas}Utilize o ambiente \texttt{citacao} para incluir
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ß in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no µ in font cmr10!
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:46: Undefined control sequence.
+l.46 ...a√ß√µes!diretas}Utilize o ambiente \texttt
+                                                  {citacao} para incluir
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ß in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no µ in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ™ in font cmr10!
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:49: Undefined control sequence.
+l.49 \begin
+           {citacao}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ß in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no µ in font cmr10!
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ™ in font cmr10!
+/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/abntex2-modelo-include-comandos.tex:53: Undefined control sequence.
+l.53 observar apenas o recuo \cite
+                                  [5.3]{NBR10520:2002}.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+[1{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] )
+(\end occurred inside a group at level 1)
+
+### simple group (level 1) entered at line 27 ({)
+### bottom level</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+Output written on "/Users/augusto/Documents/tcc/tex/RelatoÃÅrio Final/.texpadtmp/abntex2-modelo-include-comandos.pdf" (1 page, 35371 bytes).
+PDF statistics:
+ 20 PDF objects out of 1000 (max. 8388607)
+ 13 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

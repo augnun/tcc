@@ -1,0 +1,7 @@
+R.matlab="/home/augusto/R/x86_64-redhat-linux-gnu-library/3.3/R.matlab"
+datasets="/usr/lib64/R/library/datasets"
+grDevices="/usr/lib64/R/library/grDevices"
+graphics="/usr/lib64/R/library/graphics"
+methods="/usr/lib64/R/library/methods"
+stats="/usr/lib64/R/library/stats"
+utils="/usr/lib64/R/library/utils"

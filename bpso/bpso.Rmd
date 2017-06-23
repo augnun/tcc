@@ -1,0 +1,22 @@
+---
+title: "Documentacão _binary_ PSO: `bpso()`"
+output: html_notebook
+---
+
+
+```{r echo = F}
+source("bpso.R")
+```
+
+# Argumentos 
+
+1. `fname`: função a ser otimizada (maximizada/minimizada)
+2. `i.swarm`: soluções iniciais, ou zonas candidatas a ótimo
+3. `pop`: vetor populacional
+4. `pop_total`: total populacional, soma das populações das regiões
+5. `cas`: vetor de casos
+6. `casos_total`: total de casos, soma dos casos das regiões
+7. `geo`: vetor bidimensional de coordenadas dos "centroides" das regiões
+8. `adj`: matriz de adjascência
+9. `str`: estrutura de dados com as arestas dos hexágonos
+10. `a`: fator de penalização ($a \geq 1$)

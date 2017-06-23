@@ -1,0 +1,66 @@
+---
+title: "Semana 08 - 15 de abril - Avançando no PSO"
+output: html_notebook
+---
+
+```{r}
+source("../pso.novo.R")
+```
+
+# Início
+
+Parece que finalmente consegui avançar substancialmente no trabalho. A conversa com o professor em 05 de abril me deu a ideia de utilizar uma variável auxiliar dentro de um `while()`.
+
+# Dois métodos (?)
+
+Fiz algo que nem sei se o professor vai acatar, mas trabalhei com dois métodos:
+
+* O _primeiro_ é o tradicional, que foi discutido em sala de aula. Calcula LLR para a região Z inicial, avalia o vetor de vizinhos dela, considera um por um qual (e se) é possível aumentar a LLR. Sendo esse o caso, considera um novo vetor de vizinhos composto pela __união única__ (existe isso?) dos vizinhos. Para quando não crescer ou quando o vetor a ser considerado for o original. Gosto desse __snippet__ de código:
+
+```{r eval=FALSE}
+while (stop == 0) {
+          for (j in 1:length(vizinhos[[i]])) {
+            zona <- unique(append(zona, unlist(vizinhos[zona])[j]))
+            n_z <- sum(dados[zona, 5])
+            if (n_z > pop_total / 2 |
+                length(zona) > nrow(dados) / 2) {
+              next()
+            }
+            c_z <- sum(dados[zona, 2])
+            mu_z <- casos_total * (n_z / pop_total)
+            ifelse(
+              c_z > mu_z,
+              llr_z <-
+                c_z * log(c_z / mu_z) + (casos_total - c_z) * log((casos_total - c_z) /
+                                                                    (casos_total - mu_z)),
+              llr_z <- 0
+            )
+            if (llr_z > llr_z.cand[i]) {
+              llr_z.cand[i] <- llr_z
+              zonas.cand[i] <- list(zona)
+            }
+            else{
+              length(zona) <- length(zona) - 1
+              if (length(zona) > 1 & j < length(zona)) {
+                next()
+              }
+              if (length(zona) == 1 &
+                  j == length(unlist(vizinhos[zona]))) {
+                stop = 1
+                break()
+              }
+              next()
+            }
+            
+          }
+        }
+```
+
+
+* O _segundo_ incrementa as regiões da zona tomando TODOS os possíveis vizinhos e vindo "de trás pra frente"
+
+# Próximos passos
+Preciso encontrar interseções. Pensei em considerar só as n maiores LLR, com n próximo de $0.1N$, mas isso é meio arbitrário. Ou então fazer um sorteio.
+
+## Função __Reduce__
+No paradigma de programação funcional parece bem interessante. O que vou usar pra encontrar as interseções é algo do tipo `Reduce(intersect, list(pso$Zona))`

@@ -1,18 +1,11 @@
-# Inicialização dados
-# arquivos <- list.files("dados_hex", full.names = TRUE)
-# dados <- lapply(arquivos, read.table, header = FALSE)
-# dados <- data.frame(dados)
-# names(dados) <- c("Casos", "X_c", "Y_c", "Pop")
-
-
 dados <- read.csv("dados_hex/dados.csv", header = T)
 #' Title llr.ksc
 #'
 #' @param dados: data-frame com quatro colunas: casos,
 #' X_c, Y_c e população
 #'
-#' @return Data Frame com relação de zonas e respectivos
-#'  logs. da razão de verossimilhança
+#' @return Data Frame com zona cujo
+#'  log. da razão de verossimilhança é maior
 #' @export
 #'
 #' @examples
@@ -75,7 +68,6 @@ llr.ksc <- function(dados) {
     }
   }
   which.max(llr_z)
-  resultado <- list()
   resultado <- list(c(zonas[which.max(llr_z)]),max(llr_z))
   return(resultado)
 

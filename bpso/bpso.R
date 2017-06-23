@@ -1,3 +1,17 @@
+#' Title Binary PSO
+#'
+#' @param fname nome da função objetivo
+#' @param i.swarm vetor de soluções iniciais
+#' @param pop vetor populacional
+#' @param pop_total total populacional
+#' @param cas vetor de casos
+#' @param casos_total total de casos
+#' @param geo estrutura do mapa
+#' @param adj matriz de adjacências
+#' @param str estrutura do mapa
+#' @param a penalização
+#'
+#' @return lista com cluster detectado (coord), log(RV), solução inicial, número de mudanças de bits, e iterações  
 bpso <- function(fname,
                  i.swarm,
                  pop,

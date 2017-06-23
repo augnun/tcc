@@ -1,0 +1,763 @@
+\documentclass[
+	12pt,				% tamanho da fonte
+	openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+	twoside,			% para impressão em recto e verso. Oposto a oneside
+	a4paper,			% tamanho do papel. 
+	english,			% idioma adicional para hifenização
+	french,				% idioma adicional para hifenização
+	spanish,			% idioma adicional para hifenização
+	brazil				% o último idioma é o principal do documento
+	]{abntex2}
+
+
+\usepackage{lmodern}			% Usa a fonte Latin Modern			
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{lastpage}			% Usado pela Ficha catalográfica
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+\usepackage{amsmath}
+\usepackage{amsfonts}
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+
+% --- 
+% CONFIGURAÇÕES DE PACOTES
+% --- 
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{Adaptação do algoritmo \textit{Particle Swarm Optimization} (PSO) para identificação de \textit{clusters} espaciais}
+\autor{Augusto Cesar Ribeiro Nunes}
+\local{Brasília, Brasil}
+\data{Junho de 2017}
+\orientador{André Luiz Fernandes Cançado}
+\instituicao{%
+  Universidade de Brasília
+  \par
+  Departamento de Estatística
+  \par
+  Graduação}
+\tipotrabalho{Trabalho de Conclusão de Curso (Graduação)}
+% O preambulo deve conter o tipo do trabalho, o objetivo, 
+% o nome da instituição e a área de concentração 
+\preambulo{Trabalho de Conclusão de Curso apresentado para obtenção do título de Bacharel em Estatística.}
+% ---
+
+
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+     	%pagebackref=true,
+		pdftitle={\@title}, 
+		pdfauthor={\@author},
+    	pdfsubject={\imprimirpreambulo},
+	    pdfcreator={LaTeX with abnTeX2},
+		pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico}, 
+		colorlinks=true,       		% false: boxed links; true: colored links
+    	linkcolor=blue,          	% color of internal links
+    	citecolor=blue,        		% color of links to bibliography
+    	filecolor=magenta,      		% color of file links
+		urlcolor=blue,
+		bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+% Seleciona o idioma do documento (conforme pacotes do babel)
+%\selectlanguage{english}
+\selectlanguage{brazil}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+% \pretextual
+
+% ---
+% Capa
+% ---
+\imprimircapa
+% ---
+
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\imprimirfolhaderosto*
+% ---
+
+% ---
+% Inserir a ficha bibliografica
+% ---
+
+% Isto é um exemplo de Ficha Catalográfica, ou ``Dados internacionais de
+% catalogação-na-publicação''. Você pode utilizar este modelo como referência. 
+% Porém, provavelmente a biblioteca da sua universidade lhe fornecerá um PDF
+% com a ficha catalográfica definitiva após a defesa do trabalho. Quando estiver
+% com o documento, salve-o como PDF no diretório do seu projeto e substitua todo
+% o conteúdo de implementação deste arquivo pelo comando abaixo:
+%
+% \begin{fichacatalografica}
+%     \includepdf{fig_ficha_catalografica.pdf}
+% \end{fichacatalografica}
+
+\begin{fichacatalografica}
+	\sffamily
+	\vspace*{\fill}					% Posição vertical
+	\begin{center}					% Minipage Centralizado
+	\fbox{\begin{minipage}[c][8cm]{13.5cm}		% Largura
+	\small
+	\imprimirautor
+	%Sobrenome, Nome do autor
+	
+	\hspace{0.5cm} \imprimirtitulo  / \imprimirautor. --
+	\imprimirlocal, \imprimirdata-
+	
+	\hspace{0.5cm} \pageref{LastPage} p. : il. (algumas color.) ; 30 cm.\\
+	
+	\hspace{0.5cm} \imprimirorientadorRotulo~\imprimirorientador\\
+	
+	\hspace{0.5cm}
+	\parbox[t]{\textwidth}{\imprimirtipotrabalho~--~\imprimirinstituicao,
+	\imprimirdata.}\\
+	
+	\hspace{0.5cm}
+		1. Estatística Espacial.
+		2. Detecção de Conglomerados.
+		2. Particle Swarm Optimization.
+		I. André Luiz Fernandes Cançado.
+		II. Universidade de Brasília.
+		III. Departamento de Estatística.
+		IV. Adaptação do algoritmo \textit{Particle Swarm Optimization} (PSO) para identificação de \textit{clusters} espaciais		
+	\end{minipage}}
+	\end{center}
+\end{fichacatalografica}
+% ---
+
+% ---
+% Inserir errata
+% ---
+%\begin{errata}
+%Elemento opcional da \citeonline[4.2.1.2]{NBR14724:2011}. Exemplo:
+%
+%\vspace{\onelineskip}
+%
+%FERRIGNO, C. R. A. \textbf{Tratamento de neoplasias ósseas apendiculares com
+%reimplantação de enxerto ósseo autólogo autoclavado associado ao plasma
+%rico em plaquetas}: estudo crítico na cirurgia de preservação de membro em
+%cães. 2011. 128 f. Tese (Livre-Docência) - Faculdade de Medicina Veterinária e
+%Zootecnia, Universidade de São Paulo, São Paulo, 2011.
+%
+%\begin{table}[htb]
+%\center
+%\footnotesize
+%\begin{tabular}{|p{1.4cm}|p{1cm}|p{3cm}|p{3cm}|}
+%  \hline
+%   \textbf{Folha} & \textbf{Linha}  & \textbf{Onde se lê}  & \textbf{Leia-se}  \\
+%    \hline
+%    1 & 10 & auto-conclavo & autoconclavo\\
+%   \hline
+%\end{tabular}
+%\end{table}
+%
+%\end{errata}
+% ---
+
+% ---
+% Inserir folha de aprovação
+% ---
+
+% Isto é um exemplo de Folha de aprovação, elemento obrigatório da NBR
+% 14724/2011 (seção 4.2.1.3). Você pode utilizar este modelo até a aprovação
+% do trabalho. Após isso, substitua todo o conteúdo deste arquivo por uma
+% imagem da página assinada pela banca com o comando abaixo:
+%
+% \includepdf{folhadeaprovacao_final.pdf}
+%
+%\begin{folhadeaprovacao}
+%
+%  \begin{center}
+%    {\ABNTEXchapterfont\large\imprimirautor}
+%
+%    \vspace*{\fill}\vspace*{\fill}
+%    \begin{center}
+%      \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
+%    \end{center}
+%    \vspace*{\fill}
+%    
+%    \hspace{.45\textwidth}
+%    \begin{minipage}{.5\textwidth}
+%        \imprimirpreambulo
+%    \end{minipage}%
+%    \vspace*{\fill}
+%   \end{center}
+%        
+%   Trabalho aprovado. \imprimirlocal, 24 de novembro de 2012:
+%
+%   \assinatura{\textbf{\imprimirorientador} \\ Orientador} 
+%   \assinatura{\textbf{Professor} \\ Convidado 1}
+%   \assinatura{\textbf{Professor} \\ Convidado 2}
+%   %\assinatura{\textbf{Professor} \\ Convidado 3}
+%   %\assinatura{\textbf{Professor} \\ Convidado 4}
+%      
+%   \begin{center}
+%    \vspace*{0.5cm}
+%    {\large\imprimirlocal}
+%    \par
+%    {\large\imprimirdata}
+%    \vspace*{1cm}
+%  \end{center}
+%  
+%\end{folhadeaprovacao}
+% ---
+
+% ---
+% Dedicatória
+% ---
+%\begin{dedicatoria}
+%   \vspace*{\fill}
+%   \centering
+%   \noindent
+%   \textit{ Este trabalho é dedicado às crianças adultas que,\\
+%   quando pequenas, sonharam em se tornar cientistas.} \vspace*{\fill}
+%\end{dedicatoria}
+% ---
+
+% ---
+% Agradecimentos
+% ---
+%\begin{agradecimentos}
+%Os agradecimentos principais são direcionados à Gerald Weber, Miguel Frasson,
+%Leslie H. Watter, Bruno Parente Lima, Flávio de Vasconcellos Corrêa, Otavio Real
+%Salvador, Renato Machnievscz\footnote{Os nomes dos integrantes do primeiro
+%projeto abn\TeX\ foram extraídos de
+%\url{http://codigolivre.org.br/projects/abntex/}} e todos aqueles que
+%contribuíram para que a produção de trabalhos acadêmicos conforme
+%as normas ABNT com \LaTeX\ fosse possível.
+%
+%Agradecimentos especiais são direcionados ao Centro de Pesquisa em Arquitetura
+%da Informação\footnote{\url{http://www.cpai.unb.br/}} da Universidade de
+%Brasília (CPAI), ao grupo de usuários
+%\emph{latex-br}\footnote{\url{http://groups.google.com/group/latex-br}} e aos
+%novos voluntários do grupo
+%\emph{\abnTeX}\footnote{\url{http://groups.google.com/group/abntex2} e
+%\url{http://www.abntex.net.br/}}~que contribuíram e que ainda
+%contribuirão para a evolução do \abnTeX.
+%
+%\end{agradecimentos}
+% ---
+
+% ---
+% Epígrafe
+% ---
+%\begin{epigrafe}
+%    \vspace*{\fill}
+%	\begin{flushright}
+%		\textit{``Não vos amoldeis às estruturas deste mundo, \\
+%		mas transformai-vos pela renovação da mente, \\
+%		a fim de distinguir qual é a vontade de Deus: \\
+%		o que é bom, o que Lhe é agradável, o que é perfeito.\\
+%		(Bíblia Sagrada, Romanos 12, 2)}
+%	\end{flushright}
+%\end{epigrafe}
+% ---
+
+% ---
+% RESUMOS
+% ---
+
+% resumo em português
+\setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
+\begin{resumo}
+Este Trabalho de Conclusão de Curso contrapõe o \textit{Scan} Circular de Kulldorff e uma implementação do BPSO para a Análise e Identificação de \textit{Clusters} em um mapa de 203 hexágonos regulares e avalia ambos quanto ao seu Poder, Sensibilidade e Valor Preditivo Positivo.
+
+  \textbf{Palavras-chave}: Estatística Espacial. \textit{Particle Swarm Optimization}. \textit{Binary Particle Swarm Optimization}. 
+%  Segundo a \citeonline[3.1-3.2]{NBR6028:2003}, o resumo deve ressaltar o
+%  objetivo, o método, os resultados e as conclusões do documento. A ordem e a extensão
+%  destes itens dependem do tipo de resumo (informativo ou indicativo) e do
+%  tratamento que cada item recebe no documento original. O resumo deve ser
+%  precedido da referência do documento, com exceção do resumo inserido no
+%  próprio documento. (\ldots) As palavras-chave devem figurar logo abaixo do
+%  resumo, antecedidas da expressão Palavras-chave:, separadas entre si por
+%  ponto e finalizadas também por ponto.
+
+%  \textbf{Palavras-chave}: latex. abntex. editoração de texto.
+\end{resumo}
+
+% resumo em inglês
+\begin{resumo}[Abstract]
+ \begin{otherlanguage*}{english}
+   This is the english abstract.
+
+   \vspace{\onelineskip}
+ 
+   \noindent 
+   \textbf{Keywords}: latex. abntex. text editoration.
+ \end{otherlanguage*}
+\end{resumo}
+
+% % resumo em francês 
+% \begin{resumo}[Résumé]
+%  \begin{otherlanguage*}{french}
+%     Il s'agit d'un résumé en français.
+ 
+%    \textbf{Mots-clés}: latex. abntex. publication de textes.
+%  \end{otherlanguage*}
+% \end{resumo}
+
+% % resumo em espanhol
+% \begin{resumo}[Resumen]
+%  \begin{otherlanguage*}{spanish}
+%    Este es el resumen en español.
+  
+%    \textbf{Palabras clave}: latex. abntex. publicación de textos.
+%  \end{otherlanguage*}
+% \end{resumo}
+% ---
+
+% ---
+% inserir lista de ilustrações
+% ---
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+% ---
+
+% ---
+% inserir lista de tabelas
+% ---
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+% ---
+
+% ---
+% inserir lista de abreviaturas e siglas
+% ---
+\begin{siglas}
+  \item[ABNT] Associação Brasileira de Normas Técnicas
+  \item[abnTeX] ABsurdas Normas para TeX
+\end{siglas}
+% ---
+
+% ---
+% inserir lista de símbolos
+% ---
+\begin{simbolos}
+  \item[$ \Gamma $] Letra grega Gama
+  \item[$ \Lambda $] Lambda
+  \item[$ \zeta $] Letra grega minúscula zeta
+  \item[$ \in $] Pertence
+\end{simbolos}
+% ---
+
+% ---
+% inserir o sumario
+% ---
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+% ---
+
+
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+% ----------------------------------------------------------
+% Introdução (exemplo de capítulo sem numeração, mas presente no Sumário)
+% ----------------------------------------------------------
+\chapter*[Introdução]{Introdução}
+\addcontentsline{toc}{chapter}{Introdução}
+% ----------------------------------------------------------
+
+
+Se conceituarmos, ingenuamente, a Estatística como um compêndio de metodologias que tem como objetivo a descrição da variabilidade presente em processos, podemos entender a Estatística Espacial como tão somente a aplicação de metodologias adequadas a observações distribuídas de maneira espacial. 
+
+Seu desenvolvimento como área da Estatística Moderna acompanhou intimamente e de maneira concomitante estudos em diversas áreas do conhecimento e, como em inúmeras outras aplicações, foi fortemente impulsionado pelo aumento significativo tanto da disponibilidade quanto do poder computacional nas últimas décadas. 
+
+Há ainda a importante distinção entre problemas meramente espaciais e aqueles onde o tempo é uma dimensão não-desprezível. Processos espaço-temporais são, via de regra, tratados de maneira diferente em relação àqueles sem a presença da componente temporal. Este trabalho lida com um problema não-estocástico, ainda que o mesmo possa ser adaptado de forma a acomodar adequadamente a dimensão temporal.
+
+Como tema em Estatística Espacial, o problema de análise de \textit{clusters} consiste em, supondo um certo processo aleatório que ocorre em um espaço delimitado, avaliar se o mesmo ocorre de maneira meramente aleatória ou se há a presença de um padrão definidor da presença de um conglomerado, ou seja, um \textit{cluster}. A etapa de identificação consiste em descrever, sob o sistema de referência, qual é o conglomerado identificado. As heurísticas dedicam-se primariamente à etapa de análise do conglomerado, à investigação de sua presença ou ausência, sendo a etapa de identificação executada em um segundo momento e decorrendo da primeira. Uma definição formal e útil é apresentada em \ref{sec:geral}, o caso particular deste Trabalho de Conclusão de Curso é dada em \ref{sec:dmg}.
+
+Uma heurística tradicional para a detecção de \textit{clusters} é o Algoritmo do \textit{Scan} Circular de Kulldorff, proposto em \cite{kulldorff1997spatial}, descrito em maiores detalhes sob sua forma não-estocástica em \ref{sec:ksc}. Este algoritmo simples e versátil, e cujo uso perpassa diversas áreas da ciência aplicada \cite{kulldorff1999spatial}, sofre de uma limitação potencialmente grave sugerida pelo seu próprio nome: o formato circular de sua janela de análise pode diminuir seu poder na detecção de \textit{clusters} não-regulares. O \textit{Scan} Circular de Kulldorff é a primeira metodologia de identificação de \textit{clusters} implementada neste trabalho.
+
+Deixando temporariamente a Estatística de lado e voltando os olhos para a Ciência da Computação, na década de 1960 quatro metodologias diferentes foram desenvolvidas de maneira mais ou menos independente e compõem o paradigma que hoje é conhecido como Computação Evolucionária. Como o nome sugere, as heurísticas desse tipo inspiram-se em maior ou menor grau nos mecanismos evolutivos da natureza: conceitos como "população", "seleção", "competição", "mutação" etc. são encontrados em abundância na literatura da área, como descrito em \cite{fogel1994introduction} e \cite{back1997evolutionary}. Em termos gerais, a motivação por trás de tais desenvolvimentos foi a demanda crescente por sistemas com um certo nível de autonomia, ou que disponham de um certo nível de \textit{inteligência}, ainda que rudimentar (dada a escassa capacidade computacional da época) e que algumas abordagens façam um contraponto entre "evolução" e "inteligência". 
+
+Uma das aplicações mais promissoras dos algoritmos desenvolvidos sob a perspectiva da Computação Evolucionária é a de problemas de otimização. Destas, uma heurística muito geral e poderosa envolve o que os autores chamaram de "Enxame de Partículas" (\textit{Particle Swarm}), que daria origem ao Algoritmo \textit{Particle Swarm Optimization}, ou PSO \cite{eberhart1995new}. O PSO também empresta termos que até então eram utilizados em outros contextos, e sua motivação admitidamente advém do vôo de pássaros e peixes em cardume. Decididamente, em sua aplicação o algoritmo provou-se uma heurística versátil e poderosa em uma grande gama de problemas, como mostra \cite{shi2001particle}. O PSO é descrito com maiores detalhes em \ref{chap:PSO}.
+
+Entretanto, uma limitação da proposição original do PSO era a de que aplicava-se apenas a contextos de otimização real, ou contínua. Em \cite{kennedy1997discrete} os próprios autores da heurística original propuseram adaptações que possibilitaram que o mesmo pudesse ser utilizado em contextos de otimização discreta, a este algoritmo adaptaram deram o nome de \textit{Binary Particle Swarm Optimization}, ou BPSO. O BPSO é a segunda metodologia de detecção de \textit{clusters} aqui implementada: espera-se que ele seja mais versátil na detecção de \textit{clusters} com formatos \textit{irregulares} quando comparado ao \textit{Scan} Circular de Kulldorff, e que não seja inaceitavelmente pior que ele quando da detecção de \textit{clusters} circulares.
+
+O mapa composto por 203 hexágonos utilizado aqui é descrito em \ref{sec:mapa}. A distribuição dos 406 casos é feita de 4 maneiras diferentes, cada uma representa um formato de \textit{cluster} conhecido e que desejamos que os algoritmos sejam capazes de detectá-los. Estes 4 cenários são descritos em \ref{sec:casos}
+
+Os procedimentos de simulação utilizados envolvem Simulação de Monte Carlo para o \textit{Scan} Circular de Kulldorff e o BPSO, descritos em \ref{sec:simul}. 
+
+% ----------------------------------------------------------
+% PARTE
+% ----------------------------------------------------------
+\part{A análise e identificação de \textit{clusters}}
+\label{parte:1}
+
+\chapter{Descrição do problema de análise de \textit{clusters}}
+\label{chap:prob} 
+
+
+
+
+\section{De maneira geral}
+\label{sec:geral}
+
+\cite{cressie2015statistics} conceitua três tipos de dados mais comumente encontrados nos problemas de Estatística Espacial:
+
+\begin{itemize}
+	\item Dados pontuais: Coordenadas $(X_i, Y_i)$ de ocorrência ou presença de cada i-ésimo evento; 
+    \item Dados de área: Não dispomos da referência exata do evento mas sim de dados de contagem do mesmo em uma certa região do Espaço Geográfico;
+    \item Dados de superfície: A tripla $(X_i, Y_i, Z_i)$ indica, além das coordenadas de ocorrência do i-ésimo evento, uma medição $Z_i$ do mesmo.
+\end{itemize}
+
+Claramente, estas três estruturas de dados apresentam uma certa equivalência e eventualmente - de acordo com a natureza do problema - pode ser mais indicado utilizar uma ou outra. 
+
+Resgatando a \textit{definição} informal dada na Introdução do trabalho: a análise de \textit{clusters} dedica-se à avaliação de um certo fenômeno que ocorre no espaço quanto à homogeneidade do mesmo. Supondo que dispomos de dados pontuais de ocorrência, uma das abordagens possíveis para este problema é apresentada em \cite{diggle2013statistical}, sob o que ele chama de \textit{Complete Spatial Randomness Hypothesis}, ou Hipótese de Aleatoriedade Espacial Completa, que prescreve duas suposições:
+
+\begin{enumerate}
+\item O número de eventos em um região planar A de área $|A|$ segue uma distribuição de Poisson com média $\lambda |A|$;
+\item Dados $n$ eventos $x_i$ na região A, os $x_i$ são uma amostra aleatória da distribuição uniforme em A.
+\end{enumerate}
+
+A abordagem consiste então em testar essa hipótese, em particular suas suposições. O foco principal neste trabalho está em testar a primeira hipótese, de que a \textit{intensidade} $\lambda$ de ocorrência é constante. A hipótese CSR é apresentada como uma abordagem inicial a ser realizada ainda na fase exploratória do estudo.
+% Ao lidar com dados pontuais ou de área, uma pergunta pode surgir: os eventos em questão ocorrem de maneira \textit{aleatória} ou há um padrão detectável? Uma definição formal e breve, presente em \cite{kulldorff1997spatial}: sob o Espaço Geográfico G, supomos um processo pontual espacial aleatório N, onde N(A) é o número aleatório de pontos no conjunto $A \in G$. \cite{diggle2013statistical} define processo pontual espacial aleatório como um mecanismo estocástico que gera um conjunto contável de eventos no plano.
+
+\section{Neste trabalho}
+\label{sec:dmg}
+
+
+
+\part{O Algoritmo \textit{Particle Swarm Optimization} (PSO) e sua variante Binária}
+\chapter{Conceituação da Versão Tradicional do Algoritmo}
+% ---
+
+% ---
+\section{Origem}
+
+O algoritmo PSO é uma técnica de otimização estocástica baseada em populações originalmente proposta em \cite{eberhart1995new}. Sua tradução como \textit{Otimização usando Enxame de Partículas} sugere sua motivação metafórica no comportamento observado em um modelo social, particularmente aves em revoada à procuar de comida.  
+
+\section{Contexto de Otimização}
+Supondo que o problema alvo tenha $n$ dimensões e uma população de partículas, que representam soluções para o problema e movem-se em um espaço de busca a procura de soluções melhores. Cada partícula tem um vetor de posição $\boldmath{X}_i$ e um vetor de velocidade $\boldmath{V}_i$, que são representados no espaço n-dimensional como $\boldmath{X}_i = (x_{i1}, x_{i2}, \dots, x_{in})$ e  $\boldmath{V}_i = (v_{i1}, v_{i2}, \dots, v_{in})$, respectivamente, e também uma memória da melhor posição que ocupou no espaço de busca até o presente momento $(\text{Pbest}_i)$ bem como a melhor localização encontrada até então por todas as partículas no \textit{enxame} $(\text{Gbest})$, que são representadas no espaço n-dimensional como $\text{Pbest}_i = (x_{i1}^{Pbest}, x_{i2}^{Pbest}, \dots, x_{in}^{Pbest})$ e $\text{Gbest} = (x_1^{Gbest}, x_2^{Gbest}, \dots, x_n^{Gbest})$, respectivamente. 
+
+A cada iteração, a velocidade da i-ésima partícula é atualizada de acordo com a seguinte equação no algoritmo PSO:
+
+\begin{equation}
+\boldmath{V}_i^{k+1} = \omega\boldmath{V}_i^k + c_1r_1 \times (\text{Pbest}_i^k - \boldmath{X}_i^k) + c_2r_2\times(\text{Gbest}^k - \boldmath{X}_i^k)
+\label{eq:PSO1}
+\end{equation}
+
+onde,
+
+\begin{itemize}
+\item $\boldmath{V}_i^{k+1}$ é a velocidade da partícula i na iteração $k+1$,
+\item $\boldmath{V}_i^{k}$ é a velocidade da partícula i na iteração $k$,
+\item $\omega$ é o parâmetro de peso inercial,
+\item $c_1$ e $c_2$ são coeficientes de aceleração,
+\item $r_1$ e $r_2$ são números aleatórios entre 0 e 1,
+\item $\boldmath{X}_i^k$ é a posição da partícula i na iteração $k$,
+\item $\text{Pbest}_i^k$ é a melhor posição da partícula i até a iteração $k$,
+\item $\text{Gbest}^k$ é a melhor posição global das partículas até a iteracão $k$.
+\end{itemize}
+
+Em \cite{kennedy1997particle}, o autor apresenta uma interpretação do algoritmo, mais especificamente da equação \ref{eq:PSO1}, sob a perspectiva da Psicologia Social separando-a em dois termos:
+
+\begin{itemize}
+\item O primeiro termo, chamado de "Termo Cognitivo", baseia-se na noção de que comportamentos aleatórios que são seguidos por reforços positivos tornam-se mais prováveis no futuro;
+\item O segundo termo, chamado de "Termo Social", fundamenta-se no conceito de que a observação de um comportamento cuja cognição é correta, válida ou consistente deve resultar na imitação deste comportamento pelo observador.
+\end{itemize}
+
+Neste processo de atualização de velocidades, os coeficientes de aceleração estocástica $c_1$ e $c_2$ e o peso inercial $\omega$ são pré-definidos e são responsáveis por acelerar a partícula na direção de $\text{Pbest}_i^k$ e $\text{Gbest}^k$ respectivamente: valores pequenos para estes coeficientes fazem com quem as partículas percorram trajetórias distantes dos pontos ótimos - locais ou global - e valores grandes resultam em movimentos abruptos na direção dos pontos ótimos. Uma escolha adequada do peso inercial $\omega$ provê um equilíbrio entre explorações locais e globais das partículas, reduzindo assim o número necessário de iterações até que um ponto de ótimo seja encontrado. Uma das escolhas, proposta em \cite{kennedy2001swarm} e chamada de \textit{Inertia Weight Approach} (IWA), consiste em defini-lo da seguinte maneira:
+
+\begin{equation}
+\omega = \omega_{\text{max}} - \frac{\omega_{\text{max}} - \omega_{\text{min}}}{\text{Iter}_{\text{max}}} \times \text{Iter}
+\label{eq:pesoinercial}
+\end{equation}
+
+onde
+
+\begin{itemize}
+\item $\omega_{\text{max}}$ e $\omega_{\text{min}}$ são os pesos inerciais final e inicial, respectivamente, 
+\item $\text{Iter}_{\text{max}}$ é o número máximo de iterações,
+\item $\text{Iter}$ é o número atual da iteração.
+\end{itemize}
+
+
+Cada indivíduo movimenta-se da posição atual para a seguinte com a velocidade modificada \ref{eq:PSO1} usando a equação
+
+\begin{equation}
+\boldmath{X}_i^{k+1} = \boldmath{X}_i^{k} + \boldmath{V}_i^{k+1}
+\label{eq:x_at}
+\end{equation}
+
+
+
+
+\section{Abordagem utilizando um Fator de Constrição K}
+
+Após a apresentação inicial do algoritmo uma série de abordagens derivadas foram propostas, no entanto sempre sob a perspectiva empírica da aplicação da heurística em certos contextos \cite{van2001analysis}. Um dos estudos que se debruçam sobre a fundamentação matemática do algoritmo é \cite{clerc2002particle}. A abordagem deste trabalho trata as equações \ref{eq:PSO1}, \ref{eq:pesoinercial} e \ref{eq:x_at} como equações de diferenças, e portanto reduzindo o procedimento de busca do algoritmo a um problema de análise de autovalores de forma a garantir sua convergência em termos globais e evitar a convergência "prematura" para ótimos locais. Uma das conclusões dos autores foi a de que o PSO sem o Termo Social apresenta uma performance inaceitável, ou seja, o aspecto colaborativo do algoritmo é fundamental para sua eficiência; a segunda e talvez mais importante é a de que para garantir as características de convergência citadas - a "explosão" do algoritmo era até então controlada utilizando uma restrição $V_{max}$ - é necessária a introdução do que chamaram de "Fator de Constrição K", que modifica a equação \ref{eq:PSO1} da seguinte forma:
+
+\begin{equation}
+\boldmath{V}_i^{k+1} = K\left[\omega\boldmath{V}_i^k + c_1r_1 \times (\text{Pbest}_i^k - \boldmath{X}_i^k) + c_2r_2\times(\text{Gbest}^k - \boldmath{X}_i^k)\right]
+\label{eq:PSO1FC}
+\end{equation}
+
+com
+
+\begin{equation*}
+ K = \frac{2}{|2 - \varphi - \sqrt{\varphi^2 - 4\varphi}|}\text{,	}  \varphi = c_1 + c_2, \varphi > 4
+\end{equation*}
+
+Os autores mostraram que \ref{eq:PSO1FC} resulta em garantia de convergência, ao contrário da abordagem que utilizava a restrição $V_{max}$. 
+
+\chapter{O PSO binário}
+
+Em \cite{kennedy1997discrete} os autores, motivados pela presença de inúmeros contextos onde a otimização é feita em espaços discretos, exigem algumas modificações, notadamente:
+
+\begin{enumerate}
+	\item Começando pelo espaço de busca, que deixa de ser n-dimensional em $\mathbb{R}^n$ e passa a ser um hipercubo, onde a posição da partícula é representada por uma \textit{string} (ou um vetor) de \textit{bits}, atualizada a cada iteração.
+	\item A velocidade da partícula deixa de ser descrita por \ref{eq:PSO1} ou \ref{eq:PSO1FC} e similares, e passa a ser descrita pela Distância de Hamming, ou o número de \textit{bits} modificados na \textit{string} de \textit{bits} da partícula a cada iteração: uma partícula com \textit{velocidade} nula neste contexto é aquela cuja \textit{string} de posição não teve nenhum \textit{bit} modificado entre as iterações $t$ e $t + 1$, da mesma forma que uma partícula com velocidade máxima é aquela onde todos os \textit{bits} de seu vetor de posições foram modificados
+\end{enumerate}  
+
+
+
+
+\begin{table}[htb]
+\IBGEtab{%
+  \caption{Ilustração de diferenças entre atributos do PSO original e PSO binário.}%
+  \label{tabela-ibge}
+}{%
+  \begin{tabular}{ccc}
+  \toprule
+   Atributo & PSO Original & PSO binário \\
+  \midrule \midrule
+   Espaço de Busca A & $A \subseteq \mathbb{R}^D$ & $A \subset \{0,1\}^D$ \\
+  \midrule
+  Posição & Vetor real D-dimensional definido em \ref{eq:x_at} & \textit{String} binária D-dimensional \\
+  \midrule
+   Velocidade da partícula & Vetor a partir de \ref{eq:PSO1}, \ref{eq:PSO1FC} & Distância de Hamming e similares\\
+  \midrule 
+   Velocidade de \\ cada componente & Componentes do vetor \ref{eq:PSO1}, \ref{eq:PSO1FC} e similares & \\ 
+  \bottomrule
+\end{tabular}%
+}{%
+  \fonte{Produzido pelos autores.}%
+  \nota{Esta é uma nota, que diz que os dados são baseados na
+  regressão linear.}%
+  \nota[Anotações]{Uma anotação adicional, que pode ser seguida de várias
+  outras.}%
+  }
+\end{table}
+% ----------------------------------------------------------
+% PARTE
+% ----------------------------------------------------------
+\part{Referenciais teóricos}
+% ----------------------------------------------------------
+
+% ---
+% Capitulo de revisão de literatura
+% ---
+
+% ---
+
+\lipsum[1]
+
+\lipsum[2-3]
+
+% ----------------------------------------------------------
+% PARTE
+% ----------------------------------------------------------
+\part{Resultados}
+% ----------------------------------------------------------
+
+% ---
+% primeiro capitulo de Resultados
+% ---
+\chapter{Lectus lobortis condimentum}
+% ---
+
+% ---
+\section{Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+posuere cubilia Curae}
+% ---
+
+\lipsum[21-22]
+
+% ---
+% segundo capitulo de Resultados
+% ---
+\chapter{Nam sed tellus sit amet lectus urna ullamcorper tristique interdum
+elementum}
+% ---
+
+% ---
+\section{Pellentesque sit amet pede ac sem eleifend consectetuer}
+% ---
+
+\lipsum[24]
+
+% ----------------------------------------------------------
+% Finaliza a parte no bookmark do PDF
+% para que se inicie o bookmark na raiz
+% e adiciona espaço de parte no Sumário
+% ----------------------------------------------------------
+\phantompart
+
+% ---
+% Conclusão
+% ---
+\chapter{Conclusão}
+% ---
+
+\lipsum[31-33]
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+% ----------------------------------------------------------
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+\bibliography{ref-Relatorio_Final}
+
+% ----------------------------------------------------------
+% Glossário
+% ----------------------------------------------------------
+%
+% Consulte o manual da classe abntex2 para orientações sobre o glossário.
+%
+%\glossary
+
+% ----------------------------------------------------------
+% Apêndices
+% ----------------------------------------------------------
+
+% ---
+% Inicia os apêndices
+% ---
+\begin{apendicesenv}
+
+% Imprime uma página indicando o início dos apêndices
+\partapendices
+
+% ----------------------------------------------------------
+\chapter{Quisque libero justo}
+% ----------------------------------------------------------
+
+\lipsum[50]
+
+% ----------------------------------------------------------
+\chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
+ac pretium ante justo a nulla curabitur tristique arcu eu metus}
+% ----------------------------------------------------------
+\lipsum[55-57]
+
+\end{apendicesenv}
+% ---
+
+
+% ----------------------------------------------------------
+% Anexos
+% ----------------------------------------------------------
+
+% ---
+% Inicia os anexos
+% ---
+\begin{anexosenv}
+
+% Imprime uma página indicando o início dos anexos
+\partanexos
+
+% ---
+\chapter{Morbi ultrices rutrum lorem.}
+% ---
+\lipsum[30]
+
+% ---
+\chapter{Cras non urna sed feugiat cum sociis natoque penatibus et magnis dis
+parturient montes nascetur ridiculus mus}
+% ---
+
+\lipsum[31]
+
+% ---
+\chapter{Fusce facilisis lacinia dui}
+% ---
+
+\lipsum[32]
+
+\end{anexosenv}
+
+%---------------------------------------------------------------------
+% INDICE REMISSIVO
+%---------------------------------------------------------------------
+\phantompart
+\printindex
+%---------------------------------------------------------------------
+
+\end{document}

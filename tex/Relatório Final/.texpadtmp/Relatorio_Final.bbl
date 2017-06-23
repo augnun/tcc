@@ -1,0 +1,83 @@
+\providecommand{\abntreprintinfo}[1]{%
+ \citeonline{#1}}
+\setlength{\labelsep}{0pt}\begin{thebibliography}{}
+\providecommand{\abntrefinfo}[3]{}
+\providecommand{\abntbstabout}[1]{}
+\abntbstabout{v-1.9.6 }
+
+\bibitem[Back, Hammel e Schwefel 1997]{back1997evolutionary}
+\abntrefinfo{Back, Hammel e Schwefel}{BACK; HAMMEL; SCHWEFEL}{1997}
+{BACK, T.; HAMMEL, U.; SCHWEFEL, H.-P. Evolutionary computation: Comments on
+  the history and current state.
+\emph{IEEE transactions on Evolutionary Computation}, IEEE, v.~1, n.~1, p.
+  3--17, 1997.}
+
+\bibitem[Bergh 2001]{van2001analysis}
+\abntrefinfo{Bergh}{BERGH}{2001}
+{BERGH, F. V.~D. An analysis of particle swarm optimizers (pso).
+2001.}
+
+\bibitem[Clerc e Kennedy 2002]{clerc2002particle}
+\abntrefinfo{Clerc e Kennedy}{CLERC; KENNEDY}{2002}
+{CLERC, M.; KENNEDY, J. The particle swarm-explosion, stability, and
+  convergence in a multidimensional complex space.
+\emph{IEEE transactions on Evolutionary Computation}, IEEE, v.~6, n.~1, p.
+  58--73, 2002.}
+
+\bibitem[Cressie 2015]{cressie2015statistics}
+\abntrefinfo{Cressie}{CRESSIE}{2015}
+{CRESSIE, N. \emph{Statistics for spatial data}. [S.l.]: John Wiley \& Sons,
+  2015.}
+
+\bibitem[Diggle 2013]{diggle2013statistical}
+\abntrefinfo{Diggle}{DIGGLE}{2013}
+{DIGGLE, P.~J. \emph{Statistical analysis of spatial and spatio-temporal point
+  patterns}. [S.l.]: CRC Press, 2013.}
+
+\bibitem[Eberhart e Kennedy 1995]{eberhart1995new}
+\abntrefinfo{Eberhart e Kennedy}{EBERHART; KENNEDY}{1995}
+{EBERHART, R.; KENNEDY, J. A new optimizer using particle swarm theory. In:
+  IEEE. \emph{Micro Machine and Human Science, 1995. MHS'95., Proceedings of
+  the Sixth International Symposium on}. [S.l.], 1995. p. 39--43.}
+
+\bibitem[Fogel 1994]{fogel1994introduction}
+\abntrefinfo{Fogel}{FOGEL}{1994}
+{FOGEL, D.~B. An introduction to simulated evolutionary optimization.
+\emph{IEEE transactions on neural networks}, IEEE, v.~5, n.~1, p. 3--14, 1994.}
+
+\bibitem[Kennedy 1997]{kennedy1997particle}
+\abntrefinfo{Kennedy}{KENNEDY}{1997}
+{KENNEDY, J. The particle swarm: social adaptation of knowledge. In:  IEEE.
+  \emph{Evolutionary Computation, 1997., IEEE International Conference on}.
+  [S.l.], 1997. p. 303--308.}
+
+\bibitem[Kennedy e Eberhart 1997]{kennedy1997discrete}
+\abntrefinfo{Kennedy e Eberhart}{KENNEDY; EBERHART}{1997}
+{KENNEDY, J.; EBERHART, R.~C. A discrete binary version of the particle swarm
+  algorithm. In:  IEEE. \emph{Systems, Man, and Cybernetics, 1997.
+  Computational Cybernetics and Simulation., 1997 IEEE International Conference
+  on}. [S.l.], 1997. v.~5, p. 4104--4108.}
+
+\bibitem[Kennedy et al. 2001]{kennedy2001swarm}
+\abntrefinfo{Kennedy et al.}{KENNEDY et al.}{2001}
+{KENNEDY, J.~F. et al. \emph{Swarm intelligence}. [S.l.]: Morgan Kaufmann,
+  2001.}
+
+\bibitem[Kulldorff 1997]{kulldorff1997spatial}
+\abntrefinfo{Kulldorff}{KULLDORFF}{1997}
+{KULLDORFF, M. A spatial scan statistic.
+\emph{Communications in Statistics-Theory and methods}, Taylor \& Francis,
+  v.~26, n.~6, p. 1481--1496, 1997.}
+
+\bibitem[Kulldorff 1999]{kulldorff1999spatial}
+\abntrefinfo{Kulldorff}{KULLDORFF}{1999}
+{KULLDORFF, M. Spatial scan statistics: models, calculations, and applications.
+\emph{Scan statistics and applications}, Springer, p. 303--322, 1999.}
+
+\bibitem[Shi et al. 2001]{shi2001particle}
+\abntrefinfo{Shi et al.}{SHI et al.}{2001}
+{SHI, Y. et al. Particle swarm optimization: developments, applications and
+  resources. In:  IEEE. \emph{evolutionary computation, 2001. Proceedings of
+  the 2001 Congress on}. [S.l.], 2001. v.~1, p. 81--86.}
+
+\end{thebibliography}
